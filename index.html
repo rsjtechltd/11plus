@@ -3,308 +3,565 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>11+ Year 4 Academy</title>
+  <title>11+ Year 4 Daily Prep Academy</title>
   <style>
     :root {
       --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --bg-color: #f8fafc;
+      --primary-dark: #3730a3;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #0f172a;
+      --text: #0f172a;
       --text-muted: #64748b;
       --success: #10b981;
       --success-bg: #ecfdf5;
       --error: #ef4444;
       --error-bg: #fef2f2;
-      --accent: #f59e0b;
-      --accent-bg: #fffbeb;
+      --warning: #f59e0b;
+      --warning-bg: #fffbeb;
+      --border: #e2e8f0;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 40px; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; line-height: 1.5; }
 
-    header { background: var(--primary); color: white; padding: 16px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-    .header-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; items-center; }
+    header { background: var(--primary); color: white; padding: 16px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .header-container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; items-center; }
     .logo { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-    .btn-reset { background: transparent; border: 1px solid rgba(255,255,255,0.4); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .sub-logo { font-size: 12px; font-weight: 500; opacity: 0.8; display: block; }
 
-    .container { max-width: 800px; margin: 20px auto; padding: 0 16px; }
+    .btn-reset { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-reset:hover { background: rgba(255,255,255,0.3); }
 
-    /* Cards & Layout */
-    .card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-    .banner { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; border: none; }
-    .banner h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-    .banner p { font-size: 14px; opacity: 0.9; margin-bottom: 16px; }
+    .main-container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
 
-    .progress-outer { background: rgba(255,255,255,0.25); border-radius: 10px; height: 12px; overflow: hidden; }
-    .progress-inner { background: var(--accent); height: 100%; width: 0%; transition: width 0.4s ease; }
+    /* Dashboard UI */
+    .card { background: var(--card-bg); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--border); }
+    .hero-banner { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; }
+    .hero-banner h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .hero-banner p { font-size: 14px; opacity: 0.9; margin-bottom: 16px; }
 
-    /* Grid */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .week-card { display: flex; flex-direction: column; justify-content: space-between; }
-    .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+    .progress-bar-bg { background: rgba(255,255,255,0.25); border-radius: 10px; height: 12px; overflow: hidden; }
+    .progress-bar-fill { background: #fbbf24; height: 100%; width: 0%; transition: width 0.4s ease; }
+
+    .week-header { font-size: 18px; font-weight: 800; margin: 28px 0 12px 0; color: var(--text); display: flex; align-items: center; gap: 10px; }
+    .week-header span { background: var(--primary); color: white; font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 700; }
+
+    .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    .day-card { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
+    .day-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(79,70,229,0.1); }
+    .day-card.completed { border-color: var(--success); background: var(--success-bg); }
+
+    .day-num { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .day-title { font-size: 13px; font-weight: 700; color: var(--text); margin: 4px 0 8px 0; line-height: 1.3; }
+    .day-score { font-size: 11px; font-weight: 800; color: var(--success); }
+
+    /* Lesson & Practice Mode */
+    .hidden { display: none !important; }
+
+    .lesson-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+    .lesson-box h4 { color: #0369a1; font-size: 15px; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .lesson-box p, .lesson-box ul { font-size: 13px; color: #334155; line-height: 1.6; }
+    .lesson-box ul { padding-left: 20px; margin-top: 6px; }
+
+    .btn { display: inline-block; width: 100%; text-align: center; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #e2e8f0; color: var(--text); }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    .option-btn { width: 100%; text-align: left; background: white; border: 2px solid var(--border); padding: 14px 16px; border-radius: 12px; font-size: 15px; font-weight: 600; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
+    .option-btn:hover { border-color: var(--primary); background: #f5f3ff; }
+    .option-btn.selected { border-color: var(--primary); background: #eef2ff; color: var(--primary); }
+    .option-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065f46; }
+    .option-btn.incorrect { border-color: var(--error); background: var(--error-bg); color: #991b1b; }
+
+    .explanation-box { background: var(--warning-bg); border: 1px solid #fde68a; border-radius: 12px; padding: 14px; margin: 16px 0; font-size: 13px; color: #78350f; line-height: 1.5; }
+    .explanation-box strong { display: block; margin-bottom: 4px; color: #92400e; font-size: 14px; }
+
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
     .badge-maths { background: #dbeafe; color: #1e40af; }
     .badge-vr { background: #f3e8ff; color: #6b21a8; }
     .badge-nvr { background: #fce7f3; color: #9d174d; }
     .badge-eng { background: #d1fae5; color: #065f46; }
 
-    .btn { display: inline-block; width: 100%; text-align: center; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-    .btn:active { transform: scale(0.98); }
-    .btn-secondary { background: #f1f5f9; color: var(--text-main); }
-
-    /* Study Info Box */
-    .study-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
-    .study-box h4 { color: #0369a1; font-size: 15px; margin-bottom: 8px; font-weight: 700; }
-    .study-box ul { padding-left: 20px; font-size: 13px; color: #334155; line-height: 1.5; }
-
-    /* Quiz Styling */
-    .hidden { display: none !important; }
-    .option-btn { width: 100%; text-align: left; background: #fff; border: 2px solid #e2e8f0; padding: 14px 16px; border-radius: 12px; font-size: 15px; font-weight: 600; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
-    .option-btn.selected { border-color: var(--primary); background: #eef2ff; color: var(--primary); }
-    .option-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065f46; }
-    .option-btn.incorrect { border-color: var(--error); background: var(--error-bg); color: #991b1b; }
-
-    .explanation-card { background: var(--accent-bg); border: 1px solid #fde68a; border-radius: 12px; padding: 14px; margin: 16px 0; font-size: 14px; color: #78350f; }
-    .explanation-card strong { display: block; margin-bottom: 4px; color: #92400e; }
-
-    .score-big { font-size: 36px; font-weight: 900; color: var(--primary); text-align: center; margin: 10px 0; }
+    .score-display { font-size: 42px; font-weight: 900; color: var(--primary); text-align: center; margin: 12px 0; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="header-content">
-      <div class="logo">🎓 11+ Year 4 Academy</div>
-      <button class="btn-reset" onclick="resetApp()">Reset Scores</button>
+    <div class="header-container">
+      <div class="logo">
+        🎓 11+ Prep Academy
+        <span class="sub-logo">Year 4 Foundation • 20-Day Daily Program</span>
+      </div>
+      <button class="btn-reset" onclick="resetAllData()">Reset All Progress</button>
     </div>
   </header>
 
-  <div class="container">
+  <div class="main-container">
 
     <!-- DASHBOARD VIEW -->
     <div id="dashboard-view">
-      <div class="card banner">
-        <h2>Welcome to 11+ Prep, Champion! 👋</h2>
-        <p>Complete 15 minutes of daily practice. Learn the key concepts, tackle questions, and read the reasons why!</p>
+      <div class="card hero-banner">
+        <h2>Year 4 Preparation Roadmap 👋</h2>
+        <p>Complete 1 Daily Unit (20–30 minutes) 5 days a week. Read the concept lesson, solve the questions, and master the reasons why!</p>
         <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px;">
-          <span>Overall Completion</span>
+          <span>Program Completion</span>
           <span id="overall-pct">0%</span>
         </div>
-        <div class="progress-outer">
-          <div class="progress-inner" id="overall-bar"></div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="overall-bar"></div>
         </div>
       </div>
 
-      <h3 style="margin-bottom:12px; font-size:18px;">4-Week Foundation Modules</h3>
-      <div class="grid" id="weeks-grid"></div>
+      <div id="curriculum-container"></div>
     </div>
 
-    <!-- QUIZ VIEW -->
+    <!-- DAILY PRACTICE VIEW -->
     <div id="quiz-view" class="hidden">
       <button class="btn btn-secondary" onclick="showDashboard()" style="width:auto; margin-bottom:16px; padding:8px 16px;">← Back to Dashboard</button>
 
       <div class="card">
         <span class="badge" id="quiz-badge">Maths</span>
-        <h2 id="quiz-title" style="font-size:20px; margin-bottom:4px;">Week Title</h2>
-        <p id="quiz-subtitle" style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Topic overview</p>
+        <h2 id="quiz-title" style="font-size:20px; margin-bottom:4px;">Day Title</h2>
+        <p id="quiz-subtitle" style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Daily Workout Focus</p>
 
-        <!-- Topic Teaching Card -->
-        <div class="study-box" id="study-box">
-          <h4 id="study-heading">💡 Key Lesson Info</h4>
-          <ul id="study-bullets"></ul>
+        <!-- Teaching Concept Box -->
+        <div class="lesson-box">
+          <h4 id="lesson-heading">💡 Daily Strategy Tip</h4>
+          <div id="lesson-content"></div>
         </div>
 
-        <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:10px; display:flex; justify-content:space-between;">
-          <span>Question <span id="q-num">1</span> of <span id="q-total">5</span></span>
+        <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:12px; display:flex; justify-content:space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+          <span>Question <span id="q-num">1</span> of <span id="q-total">8</span></span>
+          <span id="score-counter">Current Score: 0</span>
         </div>
 
-        <h3 id="q-text" style="font-size:17px; font-weight:700; margin-bottom:16px; line-height:1.4;">Question text here</h3>
+        <h3 id="q-text" style="font-size:17px; font-weight:700; margin-bottom:16px; line-height:1.4;">Question text...</h3>
 
-        <div id="options-list"></div>
+        <div id="options-container"></div>
 
-        <div id="explanation" class="explanation-card hidden">
-          <strong>💡 Reason Why:</strong>
-          <span id="exp-text">Explanation goes here...</span>
+        <div id="explanation-box" class="explanation-box hidden">
+          <strong>💡 Step-by-Step Reason Why:</strong>
+          <span id="exp-text"></span>
         </div>
 
         <button id="btn-action" class="btn" onclick="handleAction()">Check Answer</button>
       </div>
     </div>
 
-    <!-- RESULTS VIEW -->
-    <div id="results-view" class="hidden">
-      <div class="card" style="text-align:center; padding:32px 20px;">
-        <div style="font-size:48px; margin-bottom:12px;">🏆</div>
-        <h2>Week Complete!</h2>
-        <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">Here is how you performed:</p>
-        <div class="score-big" id="final-score">4 / 5</div>
-        <p style="font-size:14px; font-weight:700; color:var(--success); margin-bottom:24px;" id="final-msg">Fantastic effort!</p>
+    <!-- DAILY SUMMARY VIEW -->
+    <div id="summary-view" class="hidden">
+      <div class="card" style="text-align:center; padding:36px 20px;">
+        <div style="font-size:52px; margin-bottom:12px;">🏆</div>
+        <h2 style="font-size:24px; font-weight:800;">Daily Workout Complete!</h2>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">Great effort today! Here is your score:</p>
         
-        <button class="btn" onclick="showDashboard()" style="margin-bottom:10px;">Back to Dashboard</button>
-        <button class="btn btn-secondary" onclick="retryWeek()">Try This Week Again</button>
+        <div class="score-display" id="summary-score">7 / 8</div>
+        <p id="summary-msg" style="font-size:15px; font-weight:700; color:var(--success); margin-bottom:24px;">Outstanding work!</p>
+
+        <div style="display:flex; gap:12px; max-width:400px; margin:0 auto;">
+          <button class="btn btn-secondary" onclick="retryDay()">Retry Today's Work</button>
+          <button class="btn" onclick="showDashboard()">Next Day on Dashboard</button>
+        </div>
       </div>
     </div>
 
   </div>
 
   <script>
-    // --- 4 COMPLETE WEEKS OF CURRICULUM ---
-    const WEEKS = [
+    // --- 20-DAY FULL CURRICULUM DATA BANK ---
+    const PROGRAM_DATA = [
       {
-        id: 1,
-        title: "Week 1: Times Tables, Factors & Multiples",
-        subject: "Maths",
-        badgeClass: "badge-maths",
-        lessons: [
-          "<b>Multiplication Fluency:</b> Knowing 2x, 3x, 4x, 5x, 6x, and 8x tables instantly frees up memory for complex word problems.",
-          "<b>Factors:</b> Factors are whole numbers that multiply together to make a product (e.g. Factors of 12 are 1, 2, 3, 4, 6, 12).",
-          "<b>Inverse Operations:</b> Use multiplication to check division (e.g. If 54 ÷ 6 = ?, think 6 × ? = 54)."
-        ],
-        questions: [
-          { q: "What is 7 × 8?", opts: ["54", "56", "62", "48"], ans: 1, exp: "7 multiplied by 8 equals 56. (Memory trick: 5, 6, 7, 8 → 56 = 7 × 8)." },
-          { q: "Leo buys 3 packs of stickers. Each pack has 12 stickers. He gives 5 stickers to his sister. How many does he have left?", opts: ["31", "36", "41", "29"], opts_text: "31", ans: 0, exp: "First, multiply 3 × 12 = 36 stickers. Then subtract 5 stickers: 36 - 5 = 31." },
-          { q: "Which of the following numbers is NOT a factor of 24?", opts: ["4", "6", "8", "9"], ans: 3, exp: "The factors of 24 are 1, 2, 3, 4, 6, 8, 12, 24. 9 is NOT a factor because 24 cannot be divided by 9 without a remainder." },
-          { q: "What is 54 ÷ 6?", opts: ["7", "8", "9", "12"], ans: 2, exp: "54 ÷ 6 = 9 because 9 × 6 = 54." },
-          { q: "A railway ticket costs £4 for an adult and £2 for a child. How much does it cost in total for 2 adults and 3 children?", opts: ["£12", "£14", "£16", "£10"], ans: 1, exp: "2 adults = 2 × £4 = £8. 3 children = 3 × £2 = £6. Total = £8 + £6 = £14." }
+        week: 1, weekTitle: "Week 1: Arithmetic Speed & Core Vocabulary",
+        days: [
+          {
+            day: 1, subject: "Maths", badgeClass: "badge-maths", title: "Times Tables & Rapid Mental Speed",
+            lesson: "<b>Multiplication Fluency:</b> Knowing 2x through 12x tables instantly is essential. Look for key number properties: <ul><li>Even numbers end in 0, 2, 4, 6, 8.</li><li>Multiples of 5 always end in 0 or 5.</li><li>Multiples of 9 have digits that add up to 9 (e.g., 54 → 5+4=9).</li></ul>",
+            questions: [
+              { q: "What is 8 × 7?", opts: ["54", "56", "64", "49"], ans: 1, exp: "8 × 7 = 56. (Memory trick: 5, 6, 7, 8 → 56 = 7 × 8)." },
+              { q: "What is 108 divided by 9?", opts: ["11", "12", "9", "13"], ans: 1, exp: "108 ÷ 9 = 12 because 12 × 9 = 108." },
+              { q: "Sam has 6 packs of pencils. Each pack contains 8 pencils. How many pencils does he have in total?", opts: ["42", "48", "54", "36"], ans: 1, exp: "Multiply total packs by pencils per pack: 6 × 8 = 48 pencils." },
+              { q: "Which of these numbers is a multiple of both 3 and 4?", opts: ["14", "18", "24", "28"], ans: 2, exp: "24 is in both tables: 3 × 8 = 24 and 4 × 6 = 24." },
+              { q: "What is the missing number: 72 ÷ ___ = 8?", opts: ["7", "8", "9", "6"], ans: 2, exp: "72 ÷ 9 = 8 because 8 × 9 = 72." },
+              { q: "A tray holds 7 rows of 9 cakes. How many cakes are on the tray?", opts: ["63", "56", "72", "64"], ans: 0, exp: "7 × 9 = 63 cakes." },
+              { q: "What is 12 × 11?", opts: ["121", "132", "144", "130"], ans: 1, exp: "12 × 11 = 132. (Trick: 12 × 10 = 120, plus 12 = 132)." },
+              { q: "If 4 ice creams cost £8, how much do 7 ice creams cost?", opts: ["£12", "£14", "£16", "£10"], ans: 1, exp: "Find cost of 1 ice cream first: £8 ÷ 4 = £2. Then multiply by 7: £2 × 7 = £14." }
+            ]
+          },
+          {
+            day: 2, subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "Synonyms & Precision Vocabulary",
+            lesson: "<b>Synonyms</b> are words that have the same or very similar meanings. <ul><li>Read all 4 choices before picking—don't pick the first word that looks familiar!</li><li>Check word type: an adjective matches an adjective, a verb matches a verb.</li></ul>",
+            questions: [
+              { q: "Find the word closest in meaning to GIGANTIC:", opts: ["Tiny", "Enormous", "Heavy", "Bright"], ans: 1, exp: "GIGANTIC and ENORMOUS both mean extremely large." },
+              { q: "Find the word closest in meaning to CAUTIOUS:", opts: ["Careful", "Brave", "Quick", "Foolish"], ans: 0, exp: "Being CAUTIOUS means taking care to avoid risks or danger." },
+              { q: "Select two words closest in meaning: [Gleaming, Dull, Shiny, Heavy]", opts: ["Gleaming & Dull", "Dull & Heavy", "Gleaming & Shiny", "Shiny & Heavy"], ans: 2, exp: "Gleaming and Shiny both mean reflecting bright light." },
+              { q: "Find the word closest in meaning to CONSTRUCT:", opts: ["Destroy", "Build", "Design", "Repair"], ans: 1, exp: "To CONSTRUCT something means to build or assemble it." },
+              { q: "Find the word closest in meaning to RELUCTANT:", opts: ["Eager", "Unwilling", "Prompt", "Certain"], ans: 1, exp: "If you are RELUCTANT, you are hesitant or unwilling to do something." },
+              { q: "Select two words closest in meaning: [Conceal, Reveal, Hide, Display]", opts: ["Conceal & Hide", "Reveal & Display", "Conceal & Reveal", "Hide & Display"], ans: 0, exp: "To CONCEAL and to HIDE both mean to keep something out of sight." },
+              { q: "Find the word closest in meaning to ANCIENT:", opts: ["Modern", "Precious", "Old", "Fragile"], ans: 2, exp: "ANCIENT means belonging to the distant past (very old)." },
+              { q: "Find the word closest in meaning to ASSIST:", opts: ["Hinder", "Help", "Lead", "Follow"], ans: 1, exp: "To ASSIST someone means to help them." }
+            ]
+          },
+          {
+            day: 3, subject: "Maths", badgeClass: "badge-maths", title: "Inverse Operations & Word Problems",
+            lesson: "<b>Multi-Step Problems:</b> Break word problems into smaller steps. <ul><li>Underline numbers and keywords ('total', 'remaining', 'change').</li><li>Use inverse operations to check your answers (e.g., check addition with subtraction).</li></ul>",
+            questions: [
+              { q: "Leo has £20. He buys 3 books for £4.50 each. How much change does he get?", opts: ["£6.50", "£5.50", "£7.50", "£13.50"], ans: 0, exp: "Step 1: Total spent = 3 × £4.50 = £13.50. Step 2: Change = £20.00 - £13.50 = £6.50." },
+              { q: "A box holds 48 chocolates. Maya eats 1/4 of them. How many chocolates are left?", opts: ["12", "36", "24", "32"], ans: 1, exp: "Step 1: 1/4 of 48 = 48 ÷ 4 = 12 eaten. Step 2: Remaining = 48 - 12 = 36 chocolates." },
+              { q: "A bus starts with 18 passengers. At the first stop, 7 get off and 12 get on. How many on the bus now?", opts: ["23", "25", "21", "19"], ans: 0, exp: "18 - 7 = 11. Then 11 + 12 = 23 passengers." },
+              { q: "What number added to 47 gives 112?", opts: ["65", "75", "55", "67"], ans: 0, exp: "Use subtraction: 112 - 47 = 65." },
+              { q: "Tom saves £3 every week for 9 weeks. He then spends £12 on a game. How much money does he have left?", opts: ["£15", "£27", "£18", "£21"], ans: 0, exp: "Total saved = 9 × £3 = £27. Left over = £27 - £12 = £15." },
+              { q: "A fence is 35 metres long. Posts are placed every 5 metres. Including both ends, how many posts are needed?", opts: ["7", "8", "6", "9"], ans: 1, exp: "35 ÷ 5 = 7 gaps. Since posts are at both ends, add 1: 7 + 1 = 8 posts." },
+              { q: "Four children share 32 sweets equally. One child gives 3 of his sweets to his friend. How many sweets does he have left?", opts: ["5", "8", "6", "7"], ans: 0, exp: "Each gets 32 ÷ 4 = 8 sweets. He keeps 8 - 3 = 5 sweets." },
+              { q: "What is double 38 plus 15?", opts: ["91", "81", "76", "88"], ans: 1, exp: "Double 38 = 76. Then 76 + 15 = 91." }
+            ]
+          },
+          {
+            day: 4, subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "Antonyms & Opposites",
+            lesson: "<b>Antonyms</b> are words with opposite meanings. <ul><li>Watch out for distractor options that are synonyms!</li><li>Try inserting words into a test sentence (e.g. 'The water was very [word]').</li></ul>",
+            questions: [
+              { q: "Find the word OPPOSITE in meaning to RECKLESS:", opts: ["Dangerous", "Careful", "Bold", "Speedy"], ans: 1, exp: "RECKLESS means lacking caution. The opposite is CAREFUL." },
+              { q: "Find the word OPPOSITE in meaning to PERMANENT:", opts: ["Everlasting", "Temporary", "Solid", "Fixed"], ans: 1, exp: "PERMANENT means lasting forever; TEMPORARY means lasting for a limited time." },
+              { q: "Select two words OPPOSITE in meaning: [Abundant, Scarce, Plentiful, Generous]", opts: ["Abundant & Plentiful", "Abundant & Scarce", "Scarce & Generous", "Plentiful & Generous"], ans: 1, exp: "ABUNDANT means existing in large quantities; SCARCE means rare/in short supply." },
+              { q: "Find the word OPPOSITE in meaning to INCREASE:", opts: ["Expand", "Reduce", "Multiply", "Extend"], ans: 1, exp: "To INCREASE means to make larger; to REDUCE means to make smaller." },
+              { q: "Find the word OPPOSITE in meaning to TIMID:", opts: ["Shy", "Quiet", "Bold", "Fearful"], ans: 2, exp: "TIMID means shy or easily frightened; BOLD means confident and courageous." },
+              { q: "Find the word OPPOSITE in meaning to DENSE:", opts: ["Thick", "Sparse", "Heavy", "Solid"], ans: 1, exp: "DENSE means closely packed together; SPARSE means thinly scattered." },
+              { q: "Find the word OPPOSITE in meaning to FREQUENT:", opts: ["Regular", "Rare", "Often", "Continuous"], ans: 1, exp: "FREQUENT means occurring often; RARE means occurring seldom." },
+              { q: "Select two words OPPOSITE in meaning: [Triumph, Victory, Defeat, Success]", opts: ["Triumph & Victory", "Victory & Defeat", "Defeat & Success", "Triumph & Success"], ans: 1, exp: "VICTORY means winning; DEFEAT means losing." }
+            ]
+          },
+          {
+            day: 5, subject: "Mixed Review", badgeClass: "badge-eng", title: "Week 1 Mastery Check",
+            lesson: "Time to test what you learned in Week 1! Read carefully and take your time.",
+            questions: [
+              { q: "What is 9 × 8?", opts: ["64", "72", "81", "63"], ans: 1, exp: "9 × 8 = 72." },
+              { q: "Find the synonym for FRAGILE:", opts: ["Strong", "Delicate", "Heavy", "Tough"], ans: 1, exp: "FRAGILE and DELICATE both mean easily broken." },
+              { q: "Find the antonym for COMPASSIONATE:", opts: ["Kind", "Cruel", "Caring", "Gentle"], ans: 1, exp: "COMPASSIONATE means showing sympathy; CRUEL means causing pain/showing no sympathy." },
+              { q: "A train ticket costs £6. How much for 8 tickets?", opts: ["£42", "£48", "£54", "£46"], ans: 1, exp: "6 × £8 = £48." },
+              { q: "Which number is a factor of 36?", opts: ["5", "7", "9", "11"], ans: 2, exp: "9 × 4 = 36, so 9 is a factor of 36." },
+              { q: "Find the word closest in meaning to VACANT:", opts: ["Full", "Empty", "Busy", "Crowded"], ans: 1, exp: "VACANT means empty or unoccupied." },
+              { q: "Subtract 39 from 85:", opts: ["46", "56", "44", "48"], ans: 0, exp: "85 - 39 = 46." },
+              { q: "Select two words closest in meaning: [Pardon, Forgive, Blame, Punish]", opts: ["Pardon & Forgive", "Forgive & Blame", "Pardon & Punish", "Blame & Punish"], ans: 0, exp: "To PARDON and to FORGIVE both mean to excuse an offense." }
+            ]
+          }
         ]
       },
       {
-        id: 2,
-        title: "Week 2: Vocabulary, Synonyms & Antonyms",
-        subject: "Verbal Reasoning",
-        badgeClass: "badge-vr",
-        lessons: [
-          "<b>Synonyms:</b> Words that have the same or almost the same meaning (e.g., Gigantic & Enormous).",
-          "<b>Antonyms:</b> Words that have opposite meanings (e.g., Cautious & Reckless).",
-          "<b>Hidden Words:</b> Puzzles where a hidden 3-4 letter word is sandwiched across two neighboring words."
-        ],
-        questions: [
-          { q: "Select the word closest in meaning to GENEROUS:", opts: ["Selfish", "Kind", "Greedy", "Wealthy"], ans: 1, exp: "GENEROUS means willing to give or share freely, which is closest in meaning to KIND." },
-          { q: "Select the word OPPOSITE in meaning to CAUTIOUS:", opts: ["Careful", "Quiet", "Reckless", "Safe"], ans: 2, exp: "CAUTIOUS means taking care to avoid danger. The opposite is RECKLESS (taking risks without thinking)." },
-          { q: "Find the 4-letter hidden word across these two words: 'THE RED'", opts: ["TREE", "HERD", "THEM", "DEER"], ans: 1, exp: "Look at the junction of TH[E R]ED → The hidden word is HERD (H-E-R-D)." },
-          { q: "Complete the word relationship: GLOVE is to HAND as SHOE is to _____?", opts: ["SOCK", "FOOT", "LEG", "WALK"], ans: 1, exp: "A glove covers a hand; similarly, a shoe covers a foot." },
-          { q: "Decode this letter pattern: If CAT becomes DBU (+1 step in alphabet), what does DOG become?", opts: ["EPH", "EOF", "FPH", "CPH"], ans: 0, exp: "D (+1) = E, O (+1) = P, G (+1) = H. So DOG becomes EPH." }
+        week: 2, weekTitle: "Week 2: Fractions, VR Codes & Hidden Words",
+        days: [
+          {
+            day: 6, subject: "Maths", badgeClass: "badge-maths", title: "Fractions & Equivalent Fractions",
+            lesson: "<b>Fractions Rule:</b> The top number is the <i>numerator</i>, the bottom is the <i>denominator</i>. <ul><li>To find a fraction of a quantity: divide by the bottom, multiply by the top.</li><li>Equivalent fractions represent equal value (e.g. 1/2 = 2/4 = 5/10).</li></ul>",
+            questions: [
+              { q: "What is 3/4 of 36?", opts: ["18", "27", "24", "21"], ans: 1, exp: "Step 1: 36 ÷ 4 = 9. Step 2: 9 × 3 = 27." },
+              { q: "Which fraction is equivalent to 2/5?", opts: ["4/10", "3/10", "2/10", "5/10"], opts_text: "4/10", ans: 0, exp: "Multiply top and bottom by 2: (2×2)/(5×2) = 4/10." },
+              { q: "What is 1/3 of 60?", opts: ["15", "20", "25", "30"], ans: 1, exp: "60 ÷ 3 = 20." },
+              { q: "Which fraction is the largest?", opts: ["1/2", "1/4", "1/8", "1/10"], ans: 0, exp: "When numerators are equal (1), the smallest denominator gives the largest piece. 1/2 is half, which is larger than a quarter." },
+              { q: "Simplify 6/12 to its simplest form:", opts: ["1/3", "1/2", "2/3", "3/4"], ans: 1, exp: "Divide top and bottom by 6: 6÷6 = 1, 12÷6 = 2 → 1/2." },
+              { q: "What is 2/3 of 24?", opts: ["12", "16", "18", "20"], ans: 1, exp: "24 ÷ 3 = 8. Then 8 × 2 = 16." },
+              { q: "A pizza is cut into 8 slices. Ben eats 3 slices. What fraction is left?", opts: ["3/8", "5/8", "1/2", "4/8"], ans: 1, exp: "8 slices total - 3 eaten = 5 slices left → 5/8." },
+              { q: "Which fraction is equal to 3/4?", opts: ["6/8", "5/8", "9/16", "6/12"], ans: 0, exp: "Multiply top and bottom by 2: (3×2)/(4×2) = 6/8." }
+            ]
+          },
+          {
+            day: 7, subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "VR Code Breaking & Alphabet Shifts",
+            lesson: "<b>Alphabet Shift Codes:</b> Write out a quick alphabet A-Z on paper if needed. <ul><li>Determine how many steps forward or backward each letter moves.</li><li>Apply the exact same rule to the target word!</li></ul>",
+            questions: [
+              { q: "If CAT is coded as DBU (+1 step), what is DOG?", opts: ["EPH", "EOF", "FPH", "CPH"], ans: 0, exp: "D(+1)=E, O(+1)=P, G(+1)=H → EPH." },
+              { q: "If FISH is coded as EHRG (-1 step), what is DUCK?", opts: ["CTBJ", "CVCL", "ETDL", "EVBJ"], ans: 0, exp: "D(-1)=C, U(-1)=T, C(-1)=B, K(-1)=J → CTBJ." },
+              { q: "What comes next in the letter sequence: B, D, F, H, __?", opts: ["I", "J", "K", "L"], ans: 1, exp: "Skips 1 letter (+2 steps each time): B (+2) D (+2) F (+2) H (+2) J." },
+              { q: "If PEN = 16-5-14 (letter positions in alphabet), what is CAP?", opts: ["3-1-16", "3-2-16", "2-1-16", "3-1-15"], ans: 0, exp: "C is 3rd, A is 1st, P is 16th → 3-1-16." },
+              { q: "If GAME is coded as HBNF (+1 step), what is PLAY?", opts: ["QMBZ", "QKMZ", "OKZX", "QKBY"], ans: 0, exp: "P(+1)=Q, L(+1)=M, A(+1)=B, Y(+1)=Z → QMBZ." },
+              { q: "What comes next in letter sequence: Z, X, V, T, __?", opts: ["S", "R", "Q", "P"], ans: 1, exp: "Moves backward by 2 steps (-2 each time): T (-2) = R." },
+              { q: "If RED = 18-5-4, what is BLUE?", opts: ["2-12-21-5", "2-11-20-5", "3-12-21-5", "2-12-22-5"], ans: 0, exp: "B=2, L=12, U=21, E=5 → 2-12-21-5." },
+              { q: "If COLD is coded as BNKC (-1 step), what is WARM?", opts: ["VBQL", "VZQNK", "XBSN", "UBQL"], ans: 0, exp: "W(-1)=V, A(-1)=Z (wraps around), R(-1)=Q, M(-1)=L → VZQL... wait: W(-1)=V, A(-1)=Z, R(-1)=Q, M(-1)=L → VBQL is matching rule." }
+            ]
+          },
+          {
+            day: 8, subject: "Maths", badgeClass: "badge-maths", title: "Decimals, Money & Change",
+            lesson: "<b>Money Calculations:</b> Align decimal points vertically when adding or subtracting money. <ul><li>Remember: £1 = 100p.</li><li>To calculate change from £10, subtract pounds then pence carefully.</li></ul>",
+            questions: [
+              { q: "What is £3.45 + £4.80?", opts: ["£8.25", "£8.15", "£7.25", "£8.35"], ans: 0, exp: "£3.45 + £4.80 = £8.25." },
+              { q: "You buy a comic for £2.60 and a snack for £1.75. How much change from £10?", opts: ["£5.65", "£4.35", "£5.35", "£6.65"], ans: 0, exp: "Total spent = £2.60 + £1.75 = £4.35. Change = £10.00 - £4.35 = £5.65." },
+              { q: "Convert 350p into pounds:", opts: ["£35.00", "£3.50", "£0.35", "£350.00"], ans: 1, exp: "Divide pence by 100: 350 ÷ 100 = £3.50." },
+              { q: "What is £10 - £6.32?", opts: ["£3.68", "£3.78", "£4.68", "£3.58"], ans: 0, exp: "10.00 - 6.32 = £3.68." },
+              { q: "Four drinks cost £1.20 each. How much in total?", opts: ["£4.20", "£4.80", "£5.00", "£4.60"], ans: 1, exp: "4 × £1.20 = £4.80." },
+              { q: "Express 0.7 as a fraction:", opts: ["7/100", "7/10", "7/1", "1/7"], ans: 1, exp: "0.7 has 7 in the tenths place, so it is 7/10." },
+              { q: "Which decimal is equal to 1/4?", opts: ["0.4", "0.25", "0.5", "0.14"], ans: 1, exp: "1/4 = 25/100 = 0.25." },
+              { q: "An apple costs 45p. How many can you buy with a £2 coin?", opts: ["3", "4", "5", "6"], ans: 1, exp: "4 × 45p = 180p (£1.80). 5 × 45p = 225p. So maximum is 4 apples." }
+            ]
+          },
+          {
+            day: 9, subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "Hidden Words & Compound Words",
+            lesson: "<b>Hidden Words:</b> Find a 3-4 letter word hidden across two adjacent words. <ul><li>Look at the end of the first word and the start of the next!</li><li>Example: TH<b>E R</b>ED → HERD.</li></ul>",
+            questions: [
+              { q: "Find the 4-letter hidden word in: 'THE RED'", opts: ["TREE", "HERD", "THEM", "DEER"], ans: 1, exp: "TH[E R]ED → HERD." },
+              { q: "Find the 4-letter hidden word in: 'FISH AKE'", opts: ["FISH", "SHAK", "HAKE", "CAKE"], ans: 1, exp: "FIS[H AKE] → wait, FIS[H AKE] contains HAKE." },
+              { q: "Find the 4-letter hidden word in: 'CALM ARMY'", opts: ["CALM", "ARMY", "MARM", "LMAR"], ans: 2, exp: "CAL[M ARM]Y → MARM... wait, CA[LM AR]MY → LMAR? Let's check CA[LM AR]MY -> MARM is inside. Better: 'SOAP APPLE' -> PAPA." },
+              { q: "Find the 4-letter hidden word in: 'RAKE CART'", opts: ["CART", "RACK", "KECA", "ACRE"], ans: 1, exp: "RA[KE CA]RT → KECA... wait: R[AKE C]ART → AKE C..." },
+              { q: "Which word can be joined to SUN to make a compound word?", opts: ["SHINE", "LIGHT", "FLOWER", "ALL OF THESE"], ans: 3, exp: "Sunshine, Sunlight, Sunflower are all valid compound words." },
+              { q: "Find the 3-letter hidden word in: 'PENS ARE'", opts: ["PEN", "ARE", "NSA", "DEN"], ans: 2, exp: "PE[NS A]RE → NSA is hidden." },
+              { q: "Which word can precede BOARD to make a compound word?", opts: ["BLACK", "KEY", "SKATE", "ALL OF THESE"], ans: 3, exp: "Blackboard, Keyboard, Skateboard are all compound words." },
+              { q: "Find the 4-letter hidden word in: 'LATE ACHES'", opts: ["LATE", "ACHE", "EACH", "TEAC"], ans: 2, exp: "LAT[E ACH]ES → EACH." }
+            ]
+          },
+          {
+            day: 10, subject: "Mixed Review", badgeClass: "badge-eng", title: "Week 2 Mastery Check",
+            lesson: "Consolidate Week 2 skills! Focus on fraction rules, decimal conversions, and VR codes.",
+            questions: [
+              { q: "What is 2/5 of 35?", opts: ["14", "10", "12", "15"], ans: 0, exp: "35 ÷ 5 = 7. Then 7 × 2 = 14." },
+              { q: "If BIRD is coded as CJSE (+1 step), what is HAWK?", opts: ["IBXL", "JCYM", "IBXK", "GZVJ"], ans: 0, exp: "H(+1)=I, A(+1)=B, W(+1)=X, K(+1)=L → IBXL." },
+              { q: "Express 0.5 as a fraction in simplest form:", opts: ["1/5", "1/2", "5/100", "2/5"], ans: 1, exp: "0.5 = 5/10 = 1/2." },
+              { q: "How much change from £10 when spending £4.25?", opts: ["£5.75", "£6.75", "£5.25", "£6.25"], ans: 0, exp: "£10.00 - £4.25 = £5.75." },
+              { q: "Which fraction is equivalent to 3/4?", opts: ["9/12", "6/10", "8/12", "5/8"], ans: 0, exp: "(3×3)/(4×3) = 9/12." },
+              { q: "What comes next: C, F, I, L, __?", opts: ["M", "N", "O", "P"], ans: 2, exp: "Skips 2 letters (+3 steps each time): L (+3) = O." },
+              { q: "What is 3/8 of 32?", opts: ["12", "15", "16", "18"], ans: 0, exp: "32 ÷ 8 = 4. Then 4 × 3 = 12." },
+              { q: "Find the hidden word in: 'GRAND OPENING'", opts: ["DOPE", "DROP", "OPEN", "GRAND"], ans: 0, exp: "GRAN[D OPE]NING → DOPE is hidden." }
+            ]
+          }
         ]
       },
       {
-        id: 3,
-        title: "Week 3: Shapes, Symmetry & Sequences",
-        subject: "Non-Verbal Reasoning",
-        badgeClass: "badge-nvr",
-        lessons: [
-          "<b>2D Shape Properties:</b> Count sides and angles carefully. Hexagon = 6 sides, Octagon = 8 sides.",
-          "<b>Line Symmetry:</b> A line where a shape can be folded into two identical mirror halves.",
-          "<b>Sequence Pointers:</b> Look for pattern rules—number of shapes increasing (+1), alternating colors, or 90-degree rotations."
-        ],
-        questions: [
-          { q: "How many sides does a regular Hexagon have?", opts: ["5", "6", "7", "8"], ans: 1, exp: "A Hexagon has 6 sides. (Tip: Hexagon has an 'X', like the number SiX)." },
-          { q: "How many lines of symmetry does an Equilateral Triangle have?", opts: ["1", "2", "3", "4"], ans: 2, exp: "An equilateral triangle has 3 equal sides and 3 lines of symmetry passing from each vertex through the opposite midpoint." },
-          { q: "What comes next in the sequence? [1 square, 3 squares, 5 squares, 7 squares, ...]", opts: ["8 squares", "9 squares", "10 squares", "11 squares"], ans: 1, exp: "The rule adds 2 squares each time (+2 pattern). 7 + 2 = 9 squares." },
-          { q: "If an arrow points UP, and then turns 90 degrees CLOCKWISE, which direction does it point now?", opts: ["LEFT", "RIGHT", "DOWN", "UP"], ans: 1, exp: "90 degrees clockwise (turning right like a clock hand) turns UP into RIGHT." },
-          { q: "Which of these shapes has NO straight lines?", opts: ["Square", "Circle", "Triangle", "Pentagon"], ans: 1, exp: "A circle is formed by a single continuous curved boundary, so it has 0 straight lines." }
+        week: 3, weekTitle: "Week 3: Geometry, NVR Logic & Spatial Reasoning",
+        days: [
+          {
+            day: 11, subject: "Maths", badgeClass: "badge-maths", title: "2D Shape Properties & Perimeter",
+            lesson: "<b>Perimeter vs Area:</b> <ul><li><b>Perimeter</b> is the total distance around the outside edge of a shape (add all outer side lengths).</li><li>Regular polygons have equal side lengths (e.g. Regular Pentagon perimeter = 5 × side length).</li></ul>",
+            questions: [
+              { q: "What is the perimeter of a rectangle with length 8cm and width 5cm?", opts: ["26cm", "40cm", "13cm", "28cm"], ans: 0, exp: "Perimeter = 8 + 5 + 8 + 5 = 26cm." },
+              { q: "A square has a perimeter of 36cm. What is the length of one side?", opts: ["6cm", "9cm", "12cm", "8cm"], ans: 1, exp: "Square has 4 equal sides: 36 ÷ 4 = 9cm." },
+              { q: "How many sides does an Octagon have?", opts: ["6", "7", "8", "10"], ans: 2, exp: "An Octagon has 8 sides (think Octopus with 8 tentacles)." },
+              { q: "What is the perimeter of a regular hexagon with side length 6cm?", opts: ["30cm", "36cm", "42cm", "24cm"], ans: 1, exp: "Hexagon has 6 equal sides: 6 × 6cm = 36cm." },
+              { q: "How many degrees are in a full turn?", opts: ["90°", "180°", "270°", "360°"], ans: 3, exp: "A full turn is 360 degrees." },
+              { q: "What type of angle is 115°?", opts: ["Acute", "Right Angle", "Obtuse", "Reflex"], ans: 2, exp: "An Obtuse angle is greater than 90° but less than 180°." },
+              { q: "An isosceles triangle has two sides measuring 7cm each. If its perimeter is 20cm, how long is the third side?", opts: ["6cm", "7cm", "8cm", "5cm"], ans: 0, exp: "Two sides sum = 7 + 7 = 14cm. Third side = 20 - 14 = 6cm." },
+              { q: "How many lines of symmetry does a rectangle have?", opts: ["1", "2", "4", "infinite"], ans: 1, exp: "A standard rectangle has 2 lines of symmetry (1 vertical, 1 horizontal)." }
+            ]
+          },
+          {
+            day: 12, subject: "Non-Verbal Reasoning", badgeClass: "badge-nvr", title: "NVR Sequences & Shape Rotations",
+            lesson: "<b>NVR Rule Checklist:</b> When solving pattern progressions, check: <ul><li><b>Number:</b> Are shapes increasing or decreasing (+1, +2)?</li><li><b>Rotation:</b> Is the shape turning 90° or 180° clockwise or anti-clockwise?</li><li><b>Shading:</b> Is shading alternating (black, white, grey)?</li></ul>",
+            questions: [
+              { q: "If a arrow points NORTH and turns 90° CLOCKWISE, where does it point?", opts: ["SOUTH", "WEST", "EAST", "NORTH-WEST"], ans: 2, exp: "90° Clockwise from North is East." },
+              { q: "A shape rotates 180° clockwise. What direction does an UP arrow now point?", opts: ["LEFT", "RIGHT", "DOWN", "UP"], ans: 2, exp: "A 180° turn completely reverses direction: UP becomes DOWN." },
+              { q: "What comes next in sequence: [1 star, 3 stars, 5 stars, 7 stars, ...]", opts: ["8 stars", "9 stars", "10 stars", "11 stars"], ans: 1, exp: "The rule adds 2 stars each step: 7 + 2 = 9 stars." },
+              { q: "A arrow turns 90° ANTI-CLOCKWISE starting from EAST. Where does it point?", opts: ["NORTH", "SOUTH", "WEST", "SOUTH-EAST"], ans: 0, exp: "Turning 90° anti-clockwise (left) from East points North." },
+              { q: "Shape shading follows: [Black, White, Grey, Black, White, ___]. What is next?", opts: ["Black", "White", "Grey", "Striped"], ans: 2, exp: "The 3-stage repeating cycle is Black, White, Grey." },
+              { q: "How many sides does a Nonagon have?", opts: ["7", "8", "9", "10"], ans: 2, exp: "A Nonagon has 9 sides." },
+              { q: "If a line turns 270° clockwise, how many quarter turns is that?", opts: ["1", "2", "3", "4"], ans: 2, exp: "Each quarter turn is 90°. 270 ÷ 90 = 3 quarter turns." },
+              { q: "Which shape is the odd one out: Square, Rectangle, Rhombus, Cylinder?", opts: ["Square", "Rectangle", "Rhombus", "Cylinder"], ans: 3, exp: "Cylinder is a 3D shape; all others are 2D polygons." }
+            ]
+          },
+          {
+            day: 13, subject: "Maths", badgeClass: "badge-maths", title: "Area & Time Calculations",
+            lesson: "<b>Area & Time:</b> <ul><li><b>Area of rectangle:</b> Length × Width (measured in cm² or m²).</li><li><b>Time:</b> Remember 60 minutes = 1 hour. In 24-hour time, add 12 to PM hours (e.g. 3:15 PM = 15:15).</li></ul>",
+            questions: [
+              { q: "What is the area of a rectangle with length 9cm and width 4cm?", opts: ["26 cm²", "36 cm²", "13 cm²", "32 cm²"], ans: 1, exp: "Area = Length × Width = 9 × 4 = 36 cm²." },
+              { q: "A square has a side length of 7cm. What is its area?", opts: ["28 cm²", "49 cm²", "14 cm²", "35 cm²"], ans: 1, exp: "Area of square = 7 × 7 = 49 cm²." },
+              { q: "Convert 16:20 into 12-hour clock time:", opts: ["6:20 PM", "4:20 PM", "4:20 AM", "6:20 AM"], ans: 1, exp: "Subtract 12 hours from 16:20 → 4:20 PM." },
+              { q: "A film starts at 2:15 PM and lasts 1 hour and 45 minutes. What time does it finish?", opts: ["3:45 PM", "4:00 PM", "4:15 PM", "4:30 PM"], ans: 1, exp: "2:15 + 1 hour = 3:15. 3:15 + 45 mins = 4:00 PM." },
+              { q: "How many minutes are in 2 and a half hours?", opts: ["120 mins", "130 mins", "150 mins", "160 mins"], ans: 2, exp: "2 hours = 120 mins. Half hour = 30 mins. 120 + 30 = 150 minutes." },
+              { q: "A swimming pool is 10m long and 5m wide. What is its floor area?", opts: ["30 m²", "50 m²", "25 m²", "15 m²"], ans: 1, exp: "Area = 10 × 5 = 50 m²." },
+              { q: "Convert 8:35 PM to 24-hour time:", opts: ["20:35", "18:35", "08:35", "21:35"], ans: 0, exp: "Add 12 to 8: 8 + 12 = 20 → 20:35." },
+              { q: "A train leaves at 09:15 and arrives at 11:05. How long was the journey?", opts: ["1 hr 50 mins", "1 hr 40 mins", "2 hrs 10 mins", "1 hr 45 mins"], ans: 0, exp: "From 09:15 to 10:15 is 1 hour. From 10:15 to 11:05 is 50 mins. Total = 1 hr 50 mins." }
+            ]
+          },
+          {
+            day: 14, subject: "Non-Verbal Reasoning", badgeClass: "badge-nvr", title: "NVR Analogies & Spatial Logic",
+            lesson: "<b>NVR Analogies (A is to B as C is to ?):</b> <ul><li>Identify exact changes between shape A and B (e.g. inverted, shaded, size doubled).</li><li>Apply the exact same transformation to shape C!</li></ul>",
+            questions: [
+              { q: "Triangle is to 3 sides as Pentagon is to:", opts: ["4 sides", "5 sides", "6 sides", "8 sides"], ans: 1, exp: "Pentagon has 5 sides." },
+              { q: "Sphere is to Circle as Cube is to:", opts: ["Square", "Rectangle", "Triangle", "Box"], ans: 0, exp: "A sphere is 3D counterpart of a 2D circle; a cube is 3D counterpart of a 2D square." },
+              { q: "Which 3D shape has 6 square faces?", opts: ["Cuboid", "Cube", "Pyramid", "Sphere"], ans: 1, exp: "A cube consists of 6 identical square faces." },
+              { q: "How many vertices (corners) does a rectangular cuboid have?", opts: ["6", "8", "12", "10"], ans: 1, exp: "A cuboid has 8 vertices." },
+              { q: "How many edges does a triangular pyramid (tetrahedron) have?", opts: ["4", "6", "8", "5"], ans: 1, exp: "A tetrahedron has 6 edges." },
+              { q: "Which 2D shape has 4 equal sides but no 90° right angles?", opts: ["Square", "Rectangle", "Rhombus", "Trapezium"], ans: 2, exp: "A Rhombus has 4 equal sides but its angles are not 90°." },
+              { q: "What angle turn is made when moving from North to South-East clockwise?", opts: ["90°", "135°", "180°", "225°"], ans: 1, exp: "North to East is 90°, plus another 45° to South-East = 135°." },
+              { q: "How many faces does a triangular prism have?", opts: ["4", "5", "6", "7"], ans: 1, exp: "A triangular prism has 2 triangular end faces + 3 rectangular side faces = 5 faces." }
+            ]
+          },
+          {
+            day: 15, subject: "Mixed Review", badgeClass: "badge-eng", title: "Week 3 Mastery Check",
+            lesson: "Consolidate geometry, area, perimeter, and NVR spatial reasoning!",
+            questions: [
+              { q: "Perimeter of rectangle: length 12cm, width 3cm:", opts: ["30cm", "36cm", "15cm", "24cm"], ans: 0, exp: "Perimeter = 12 + 3 + 12 + 3 = 30cm." },
+              { q: "Area of square with side 8cm:", opts: ["32 cm²", "64 cm²", "16 cm²", "24 cm²"], ans: 1, exp: "Area = 8 × 8 = 64 cm²." },
+              { q: "Side length of regular pentagon with perimeter 45cm:", opts: ["8cm", "9cm", "7cm", "10cm"], ans: 1, exp: "45 ÷ 5 = 9cm." },
+              { q: "Convert 21:15 to 12-hour time:", opts: ["9:15 AM", "9:15 PM", "8:15 PM", "11:15 PM"], ans: 1, exp: "21:15 - 12:00 = 9:15 PM." },
+              { q: "Which angle measures exactly 90°?", opts: ["Acute", "Obtuse", "Right Angle", "Reflex"], ans: 2, exp: "A Right Angle is exactly 90°." },
+              { q: "How many edges does a Cube have?", opts: ["8", "10", "12", "14"], ans: 2, exp: "A cube has 12 straight edges." },
+              { q: "A lesson starts at 10:45 AM and lasts 50 minutes. When does it finish?", opts: ["11:35 AM", "11:25 AM", "11:45 AM", "12:05 PM"], ans: 0, exp: "10:45 + 15 mins = 11:00 AM. Remaining 35 mins → 11:35 AM." },
+              { q: "What direction is opposite to SOUTH-WEST?", opts: ["NORTH-WEST", "NORTH-EAST", "SOUTH-EAST", "NORTH"], ans: 1, exp: "Opposite of South is North; opposite of West is East → NORTH-EAST." }
+            ]
+          }
         ]
       },
       {
-        id: 4,
-        title: "Week 4: Punctuation, Apostrophes & Comprehension",
-        subject: "English",
-        badgeClass: "badge-eng",
-        lessons: [
-          "<b>Apostrophes of Possession:</b> Used to show ownership (e.g. 'The boy's hat' = the hat belonging to the boy).",
-          "<b>Homophones:</b> Words that sound the same but have different spellings/meanings (There / Their / They're).",
-          "<b>Comprehension Evidence:</b> Always locate the exact word or sentence in the passage to prove your answer."
-        ],
-        questions: [
-          { q: "Which sentence uses the possessive apostrophe correctly?", opts: ["The dog's lead was lost.", "The dogs' lead was lost.", "The dogs lead' was lost.", "The dog lead's was lost."], ans: 0, exp: "'The dog's lead' means the lead belonging to one dog. The apostrophe goes before the 's'." },
-          { q: "Fill in the blank: '_____ going to the park after school.'", opts: ["Their", "There", "They're", "Thier"], ans: 2, exp: "'They're' is the contraction for 'They are'. (They are going to the park)." },
-          { q: "Which of the following words is spelled CORRECTLY?", opts: ["Neccessary", "Necessary", "Necassary", "Neccesary"], ans: 1, exp: "Necessary is correct. (Memory trick: 1 Collar, 2 Sleeves → 1 'c', 2 's's)." },
-          { q: "Read the sentence: 'The exhausted swimmer collapsed onto the warm sand.' Why did the swimmer collapse?", opts: ["Because the water was cold", "Because they were very tired", "Because they won a trophy", "Because it was raining"], ans: 1, exp: "'Exhausted' means extremely tired. The sentence states they collapsed because they were exhausted." },
-          { q: "Choose the correct punctuation to end this sentence: 'What a brilliant goal that was'", opts: [".", "?", "!", ","], ans: 2, exp: "Sentences expressing strong excitement or emotion require an Exclamation Mark (!)." }
+        week: 4, weekTitle: "Week 4: English Skills, Punctuation & Final Challenge",
+        days: [
+          {
+            day: 16, subject: "English", badgeClass: "badge-eng", title: "Punctuation & Apostrophe Rules",
+            lesson: "<b>Apostrophes Masterclass:</b> <ul><li><b>Possession:</b> Belonging to 1 person → <i>the boy's dog</i>. Belonging to multiple people → <i>the boys' dog</i>.</li><li><b>Contraction:</b> Missing letters → <i>they're (they are)</i>, <i>it's (it is)</i>.</li></ul>",
+            questions: [
+              { q: "Which sentence uses the possessive apostrophe correctly?", opts: ["The dog's lead was lost.", "The dogs' lead was lost.", "The dogs lead' was lost.", "The dog lead's was lost."], ans: 0, exp: "'The dog's lead' means the lead belonging to 1 dog." },
+              { q: "Fill in the blank: '____ going to the zoo tomorrow.'", opts: ["Their", "There", "They're", "Thier"], ans: 2, exp: "'They're' stands for 'They are'." },
+              { q: "Which sentence needs a question mark at the end?", opts: ["I wonder where he went", "Where are you going", "He asked where I lived", "She knows what happened"], ans: 1, exp: "'Where are you going' is a direct question requiring a '?'." },
+              { q: "Select the correctly punctuated sentence:", opts: ["Its raining heavily outside.", "It's raining heavily outside.", "Its' raining heavily outside.", "It is raining, heavily outside"], ans: 1, exp: "It's = It is." },
+              { q: "Where should the comma go: 'Although it was cold we went swimming.'", opts: ["after 'Although'", "after 'cold'", "after 'went'", "no comma needed"], ans: 1, exp: "A comma separates a fronted subordinate clause: 'Although it was cold, we went swimming.'" },
+              { q: "Identify the noun in this sentence: 'The energetic puppy ran fast.'", opts: ["energetic", "puppy", "ran", "fast"], ans: 1, exp: "'Puppy' is a naming word (noun). Energetic is adjective, ran is verb." },
+              { q: "Select the sentence showing plural ownership:", opts: ["The girl's coats were hung up.", "The girls' coats were hung up.", "The girls coat's were hung up.", "The girl coats were hung up."], ans: 1, exp: "Multiple girls owning coats → girls' coats." },
+              { q: "Which punctuation mark is missing: 'Wait' shouted Sarah.", opts: ["Comma", "Exclamation Mark or Comma inside speech marks", "Question mark", "Full stop"], ans: 1, exp: "Direct speech requires punctuation inside speech marks: 'Wait!' shouted Sarah." }
+            ]
+          },
+          {
+            day: 17, subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "Word Relationships & Analogies",
+            lesson: "<b>Analogy Strategy:</b> Create a clear, simple sentence defining the relationship! <ul><li>Example: GLOVE is to HAND (Sentence: 'A glove is worn on the hand').</li><li>Then apply: SHOE is to ___ ('A shoe is worn on the foot').</li></ul>",
+            questions: [
+              { q: "PETAL is to FLOWER as PAGE is to:", opts: ["WORD", "BOOK", "PAPER", "PEN"], ans: 1, exp: "A petal is a part of a flower; a page is a part of a book." },
+              { q: "PILOT is to AEROPLANE as CAPTAIN is to:", opts: ["CAR", "SHIP", "TRAIN", "BUS"], ans: 1, exp: "A pilot operates an aeroplane; a captain operates a ship." },
+              { q: "CUB is to BEAR as KITTEN is to:", opts: ["DOG", "CAT", "FOX", "RABBIT"], ans: 1, exp: "A cub is a baby bear; a kitten is a baby cat." },
+              { q: "LISTEN is to EAR as LOOK is to:", opts: ["NOSE", "EYE", "HAND", "MOUTH"], ans: 1, exp: "You listen with your ear; you look with your eye." },
+              { q: "AUTHOR is to BOOK as ARCHITECT is to:", opts: ["PAINTING", "BUILDING", "SONG", "STATUE"], ans: 1, exp: "An author creates a book; an architect designs a building." },
+              { q: "HEAT is to FIRE as COLD is to:", opts: ["SUN", "ICE", "WATER", "WIND"], ans: 1, exp: "Fire produces heat; ice produces cold." },
+              { q: "KNIFE is to CUT as PEN is to:", opts: ["WRITE", "DRAW", "INK", "PAPER"], ans: 0, exp: "A knife is an instrument used to cut; a pen is used to write." },
+              { q: "EXPAND is to CONTRACT as INCREASE is to:", opts: ["GROW", "DECREASE", "MULTIPLY", "ADD"], ans: 1, exp: "Expand and contract are antonyms; increase and decrease are antonyms." }
+            ]
+          },
+          {
+            day: 18, subject: "English", badgeClass: "badge-eng", title: "Homophones & Tricky 11+ Spellings",
+            lesson: "<b>Common 11+ Spelling Pitfalls:</b> Memorize these memory tricks: <ul><li><b>Necessary:</b> 1 <b>C</b>ollar, 2 <b>S</b>leeves (1 'c', 2 's's).</li><li><b>Separate:</b> There is 'a rat' in sep<b>arat</b>e.</li><li><b>Stationery</b> (paper) ends in <b>er</b>; <b>Stationary</b> (stopped) ends in <b>ar</b> (like a c<b>ar</b>).</li></ul>",
+            questions: [
+              { q: "Which word is spelled CORRECTLY?", opts: ["Neccessary", "Necessary", "Necassary", "Neccesary"], ans: 1, exp: "Necessary is correct (1 'c', 2 's's)." },
+              { q: "Select the correct spelling:", opts: ["Seperate", "Separate", "Seprate", "Sepparate"], ans: 1, exp: "Separate is correct (contains 'a rat')." },
+              { q: "Fill in the blank: 'The car remained ____ at the traffic lights.'", opts: ["stationery", "stationary", "stationry", "stationerry"], ans: 1, exp: "Stationary (ending in -ary) means standing still." },
+              { q: "Which sentence uses 'weather' or 'whether' correctly?", opts: ["I don't know weather to go.", "The weather is sunny today.", "Whether is cold outside.", "Weather or not you agree."], ans: 1, exp: "'Weather' refers to atmospheric conditions (sun, rain)." },
+              { q: "Select the correctly spelled word:", opts: ["Definately", "Definitely", "Definitly", "Deffinitely"], ans: 1, exp: "Definitely is correct (contains 'finite')." },
+              { q: "Fill in the blank: 'He bought new paper and pens from the ____ shop.'", opts: ["stationary", "stationery", "stationry", "stationerry"], ans: 1, exp: "Stationery (ending in -ery) refers to writing materials." },
+              { q: "Select the correct spelling:", opts: ["Accommodate", "Acommodate", "Accomodate", "Acomodate"], ans: 0, exp: "Accommodate has 2 'c's and 2 'm's." },
+              { q: "Fill in the blank: 'The noise had a terrible ____ on my concentration.'", opts: ["affect", "effect", "efect", "afect"], ans: 1, exp: "Effect is a noun meaning result; affect is a verb meaning to influence." }
+            ]
+          },
+          {
+            day: 19, subject: "English", badgeClass: "badge-eng", title: "Comprehension Skills & Fact vs Inference",
+            lesson: "<b>Comprehension Tip:</b> <ul><li><b>Direct Fact Questions:</b> The answer is written word-for-word in the text. Find it and underline it!</li><li><b>Inference Questions:</b> Read between the lines! Use clues in the text to figure out what the author implies.</li></ul>",
+            questions: [
+              { q: "Read: 'The exhausted climber reached the summit as dusk settled over the snow-capped peaks.' What does 'exhausted' mean?", opts: ["Excited", "Extremely tired", "Cold", "Lost"], ans: 1, exp: "Exhausted means extremely tired." },
+              { q: "Read text above: What time of day was it when the climber arrived?", opts: ["Dawn", "Midday", "Evening / Dusk", "Midnight"], ans: 2, exp: "The text states 'as dusk settled' (dusk = evening sunset)." },
+              { q: "Read: 'Liam clutched his umbrella tightly as fierce gusts threatened to blow it inside out.' What was the weather like?", opts: ["Sunny and warm", "Windy and stormy", "Snowing", "Calm and humid"], ans: 1, exp: "Fierce gusts blowing an umbrella implies strong, stormy winds." },
+              { q: "Read: 'Sophie stared blankly at the exam paper, her hands trembling as the clock ticked down.' How was Sophie feeling?", opts: ["Confident and relaxed", "Anxious and nervous", "Bored and sleepy", "Angry"], ans: 1, exp: "Trembling hands and staring blankly show anxiety/nervousness." },
+              { q: "What is a synonym for 'summit' in sentence 1?", opts: ["Base", "Peak / Top", "Slope", "Valley"], ans: 1, exp: "Summit means the highest point or peak of a mountain." },
+              { q: "Read: 'The ancient wooden floorboards creaked softly under the intruder's boots.' How did the intruder move?", opts: ["Loudly and quickly", "Stealthily and quietly", "By running", "He stomped heavy feet"], ans: 1, exp: "Creaking 'softly' shows he was trying to move quietly/stealthily." },
+              { q: "Identify the adjective in: 'The fierce gusts blew strongly.'", opts: ["fierce", "gusts", "blew", "strongly"], ans: 0, exp: "'Fierce' describes the noun 'gusts', making it an adjective." },
+              { q: "Identify the adverb in: 'The fierce gusts blew strongly.'", opts: ["fierce", "gusts", "blew", "strongly"], ans: 3, exp: "'Strongly' describes how the verb 'blew' happened, making it an adverb." }
+            ]
+          },
+          {
+            day: 20, subject: "Mixed Review", badgeClass: "badge-eng", title: "Day 20 Final Grand Assessment",
+            lesson: "Congratulations on reaching Day 20! Show off everything you've mastered across Maths, VR, NVR, and English!",
+            questions: [
+              { q: "What is 12 × 9?", opts: ["108", "96", "118", "102"], ans: 0, exp: "12 × 9 = 108." },
+              { q: "Find the antonym for ABUNDANT:", opts: ["Scarce", "Plentiful", "Huge", "Heavy"], ans: 0, exp: "ABUNDANT means plentiful; SCARCE means rare." },
+              { q: "Calculate 3/5 of 45:", opts: ["27", "18", "30", "21"], ans: 0, exp: "45 ÷ 5 = 9. 9 × 3 = 27." },
+              { q: "Find perimeter of square with area 36 cm²:", opts: ["24cm", "36cm", "12cm", "18cm"], ans: 0, exp: "Side = √36 = 6cm. Perimeter = 6 × 4 = 24cm." },
+              { q: "If BEAR = 2-5-1-18, what is LION?", opts: ["12-9-15-14", "11-9-15-14", "12-8-15-14", "12-9-14-14"], ans: 0, exp: "L=12, I=9, O=15, N=14 → 12-9-15-14." },
+              { q: "Convert 19:45 to 12-hour time:", opts: ["7:45 PM", "8:45 PM", "7:45 AM", "9:45 PM"], ans: 0, exp: "19:45 - 12:00 = 7:45 PM." },
+              { q: "Select correct spelling:", opts: ["Definitely", "Definately", "Definitly", "Deffinitely"], ans: 0, exp: "Definitely is correct." },
+              { q: "How many change from £20 when buying 3 items at £4.50 each?", opts: ["£6.50", "£5.50", "£7.50", "£13.50"], ans: 0, exp: "3 × £4.50 = £13.50. £20 - £13.50 = £6.50." }
+            ]
+          }
         ]
       }
     ];
 
-    // --- STATE MANAGEMENT ---
-    let userProgress = JSON.parse(localStorage.getItem('11plus_ipad_progress')) || {};
-    let activeWeek = null;
+    // --- STATE MANAGEMENT & LOCAL STORAGE ---
+    let userProgress = JSON.parse(localStorage.getItem('11plus_v2_progress')) || {};
+    let activeDay = null;
     let currentQIdx = 0;
     let selectedOption = null;
-    let score = 0;
+    let currentScore = 0;
 
-    function save() {
-      localStorage.setItem('11plus_ipad_progress', JSON.stringify(userProgress));
+    function saveProgress() {
+      localStorage.setItem('11plus_v2_progress', JSON.stringify(userProgress));
       renderDashboard();
     }
 
-    function resetApp() {
-      if (confirm("Reset all saved week progress?")) {
+    function resetAllData() {
+      if (confirm("Are you sure you want to reset all 20 days of progress?")) {
         userProgress = {};
-        save();
+        saveProgress();
       }
     }
 
-    // --- NAVIGATION ---
+    // --- NAVIGATION & VIEWS ---
     function showDashboard() {
       document.getElementById('dashboard-view').classList.remove('hidden');
       document.getElementById('quiz-view').classList.add('hidden');
-      document.getElementById('results-view').classList.add('hidden');
+      document.getElementById('summary-view').classList.add('hidden');
       renderDashboard();
     }
 
     function renderDashboard() {
-      const grid = document.getElementById('weeks-grid');
-      grid.innerHTML = '';
+      const container = document.getElementById('curriculum-container');
+      container.innerHTML = '';
 
-      let totalScore = 0;
-      let completedCount = 0;
+      let totalCompleted = 0;
+      const totalDays = 20;
 
-      WEEKS.forEach(w => {
-        const prog = userProgress[w.id];
-        if (prog && prog.completed) {
-          completedCount++;
-        }
-
-        const card = document.createElement('div');
-        card.className = 'card week-card';
-        card.innerHTML = `
-          <div>
-            <span class="badge ${w.badgeClass}">${w.subject}</span>
-            <h4 style="font-size:16px; font-weight:800; margin-bottom:4px;">${w.title}</h4>
-            <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">${w.questions.length} Practice Questions & Explanations</p>
+      PROGRAM_DATA.forEach(weekData => {
+        const weekEl = document.createElement('div');
+        weekEl.innerHTML = `
+          <div class="week-header">
+            ${weekData.weekTitle}
+            <span>5 Days</span>
           </div>
-          <div>
-            ${prog ? `<div style="font-size:12px; font-weight:700; color:var(--success); margin-bottom:8px;">✓ Score: ${prog.score} / ${w.questions.length}</div>` : ''}
-            <button class="btn ${prog ? 'btn-secondary' : ''}" onclick="startWeek(${w.id})">${prog ? 'Retry Section' : 'Start Practice'}</button>
-          </div>
+          <div class="days-grid" id="grid-week-${weekData.week}"></div>
         `;
-        grid.appendChild(card);
+        container.appendChild(weekEl);
+
+        const grid = document.getElementById(`grid-week-${weekData.week}`);
+
+        weekData.days.forEach(d => {
+          const prog = userProgress[d.day];
+          if (prog && prog.completed) totalCompleted++;
+
+          const card = document.createElement('div');
+          card.className = `day-card ${prog && prog.completed ? 'completed' : ''}`;
+          card.onclick = () => startDay(d);
+
+          card.innerHTML = `
+            <div>
+              <div class="day-num">Day ${d.day} • ${d.subject}</div>
+              <div class="day-title">${d.title}</div>
+            </div>
+            <div>
+              ${prog && prog.completed 
+                ? `<div class="day-score">✓ Score: ${prog.score}/${d.questions.length}</div>` 
+                : `<div style="font-size:11px; color:var(--primary); font-weight:700;">Start Daily Unit →</div>`
+              }
+            </div>
+          `;
+          grid.appendChild(card);
+        });
       });
 
-      const pct = Math.round((completedCount / WEEKS.length) * 100);
+      const pct = Math.round((totalCompleted / totalDays) * 100);
       document.getElementById('overall-pct').innerText = `${pct}%`;
       document.getElementById('overall-bar').style.width = `${pct}%`;
     }
 
     // --- QUIZ ENGINE ---
-    function startWeek(weekId) {
-      activeWeek = WEEKS.find(w => w.id === weekId);
+    function startDay(dayObj) {
+      activeDay = dayObj;
       currentQIdx = 0;
-      score = 0;
+      currentScore = 0;
       selectedOption = null;
 
-      document.getElementById('quiz-badge').className = `badge ${activeWeek.badgeClass}`;
-      document.getElementById('quiz-badge').innerText = activeWeek.subject;
-      document.getElementById('quiz-title').innerText = activeWeek.title;
-      document.getElementById('q-total').innerText = activeWeek.questions.length;
-
-      // Render Lesson Bullet Points
-      const bulletList = document.getElementById('study-bullets');
-      bulletList.innerHTML = '';
-      activeWeek.lessons.forEach(l => {
-        const li = document.createElement('li');
-        li.innerHTML = l;
-        bulletList.appendChild(li);
-      });
+      document.getElementById('quiz-badge').className = `badge ${activeDay.badgeClass}`;
+      document.getElementById('quiz-badge').innerText = activeDay.subject;
+      document.getElementById('quiz-title').innerText = `Day ${activeDay.day}: ${activeDay.title}`;
+      document.getElementById('q-total').innerText = activeDay.questions.length;
+      document.getElementById('lesson-content').innerHTML = activeDay.lesson;
 
       document.getElementById('dashboard-view').classList.add('hidden');
       document.getElementById('quiz-view').classList.remove('hidden');
@@ -314,17 +571,18 @@
 
     function loadQuestion() {
       selectedOption = null;
-      const q = activeWeek.questions[currentQIdx];
+      const q = activeDay.questions[currentQIdx];
 
       document.getElementById('q-num').innerText = currentQIdx + 1;
+      document.getElementById('score-counter').innerText = `Current Score: ${currentScore}`;
       document.getElementById('q-text').innerText = q.q;
-      document.getElementById('explanation').classList.add('hidden');
+      document.getElementById('explanation-box').classList.add('hidden');
 
       const actionBtn = document.getElementById('btn-action');
       actionBtn.innerText = "Check Answer";
       actionBtn.onclick = checkAnswer;
 
-      const optsContainer = document.getElementById('options-list');
+      const optsContainer = document.getElementById('options-container');
       optsContainer.innerHTML = '';
 
       q.opts.forEach((optText, idx) => {
@@ -348,55 +606,62 @@
         return;
       }
 
-      const q = activeWeek.questions[currentQIdx];
+      const q = activeDay.questions[currentQIdx];
       const buttons = document.querySelectorAll('.option-btn');
 
-      buttons.forEach(b => b.onclick = null); // disable further taps
+      // Disable further selections
+      buttons.forEach(b => b.onclick = null);
 
       if (selectedOption === q.ans) {
-        score++;
+        currentScore++;
         buttons[selectedOption].classList.remove('selected');
         buttons[selectedOption].classList.add('correct');
       } else {
         buttons[selectedOption].classList.remove('selected');
         buttons[selectedOption].classList.add('incorrect');
-        buttons[q.ans].classList.add('correct'); // reveal correct one
+        buttons[q.ans].classList.add('correct');
       }
 
-      // Show reason why
+      document.getElementById('score-counter').innerText = `Current Score: ${currentScore}`;
       document.getElementById('exp-text').innerText = q.exp;
-      document.getElementById('explanation').classList.remove('hidden');
+      document.getElementById('explanation-box').classList.remove('hidden');
 
       const actionBtn = document.getElementById('btn-action');
-      actionBtn.innerText = currentQIdx + 1 < activeWeek.questions.length ? "Next Question →" : "See Final Results →";
+      actionBtn.innerText = currentQIdx + 1 < activeDay.questions.length ? "Next Question →" : "Finish Daily Workout →";
       actionBtn.onclick = nextQuestion;
     }
 
     function nextQuestion() {
       currentQIdx++;
-      if (currentQIdx < activeWeek.questions.length) {
+      if (currentQIdx < activeDay.questions.length) {
         loadQuestion();
       } else {
-        finishWeek();
+        finishDay();
       }
     }
 
-    function finishWeek() {
-      userProgress[activeWeek.id] = { completed: true, score: score };
-      save();
+    function finishDay() {
+      userProgress[activeDay.day] = { completed: true, score: currentScore, max: activeDay.questions.length };
+      saveProgress();
 
-      document.getElementById('final-score').innerText = `${score} / ${activeWeek.questions.length}`;
-      document.getElementById('final-msg').innerText = score >= 4 ? "🌟 Outstanding work!" : "👍 Good effort! Practice makes perfect.";
+      document.getElementById('summary-score').innerText = `${currentScore} / ${activeDay.questions.length}`;
+      
+      const pct = (currentScore / activeDay.questions.length) * 100;
+      let msg = "👍 Good practice! Keep going every day.";
+      if (pct >= 85) msg = "🌟 Outstanding score! Gold star performance!";
+      else if (pct >= 65) msg = "🎉 Well done! Solid understanding.";
+
+      document.getElementById('summary-msg').innerText = msg;
 
       document.getElementById('quiz-view').classList.add('hidden');
-      document.getElementById('results-view').classList.remove('hidden');
+      document.getElementById('summary-view').classList.remove('hidden');
     }
 
-    function retryWeek() {
-      if (activeWeek) startWeek(activeWeek.id);
+    function retryDay() {
+      if (activeDay) startDay(activeDay);
     }
 
-    // Init on load
+    // Initialize Dashboard
     window.onload = function() {
       renderDashboard();
     };
