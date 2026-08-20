@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>11+ Multi-Year Pathway Academy</title>
+  <title>11+ Year 4 Daily Prep Academy</title>
   <style>
     :root {
       --primary: #4f46e5;
@@ -22,14 +22,15 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; line-height: 1.5; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; line-height: 1.5; -webkit-tap-highlight-color: transparent; }
 
     header { background: var(--primary); color: white; padding: 16px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .header-container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 18px; font-weight: 800; }
     .sub-logo { font-size: 11px; font-weight: 500; opacity: 0.85; display: block; }
 
-    .btn-reset { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .btn-reset { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-reset:hover { background: rgba(255,255,255,0.3); }
 
     .main-container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
 
@@ -38,17 +39,24 @@
     .hero-banner h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
     .hero-banner p { font-size: 13px; opacity: 0.9; margin-bottom: 12px; }
 
-    .level-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
-    .tab-btn { padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; background: #e2e8f0; color: var(--text-muted); white-space: nowrap; transition: 0.2s; }
-    .tab-btn.active { background: var(--primary); color: white; }
+    .progress-bar-bg { background: rgba(255,255,255,0.25); border-radius: 10px; height: 10px; overflow: hidden; }
+    .progress-bar-fill { background: #fbbf24; height: 100%; width: 0%; transition: width 0.4s ease; }
 
-    .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
-    .day-card { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; }
+    /* Module Block Filters */
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 6px; }
+    .tab-btn { padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: 800; border: 2px solid var(--border); background: white; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: 0.2s; }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .week-header { font-size: 15px; font-weight: 800; margin: 20px 0 10px 0; color: var(--text); display: flex; align-items: center; justify-content: space-between; }
+    .week-header span { background: var(--primary); color: white; font-size: 10px; padding: 2px 8px; border-radius: 12px; font-weight: 700; }
+
+    .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .day-card { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between; min-height: 105px; }
     .day-card:hover { border-color: var(--primary); transform: translateY(-2px); }
     .day-card.completed { border-color: var(--success); background: var(--success-bg); }
 
-    .day-num { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-    .day-title { font-size: 13px; font-weight: 700; color: var(--text); margin: 4px 0 8px 0; }
+    .day-num { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .day-title { font-size: 12px; font-weight: 700; color: var(--text); margin: 4px 0 6px 0; line-height: 1.3; }
     .day-score { font-size: 11px; font-weight: 800; color: var(--success); }
 
     .hidden { display: none !important; }
@@ -56,17 +64,18 @@
     .lesson-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 16px; margin-bottom: 20px; font-size: 13px; color: #334155; }
     .lesson-box h4 { color: #0369a1; font-size: 14px; font-weight: 800; margin-bottom: 6px; }
 
-    .btn { display: inline-block; width: 100%; text-align: center; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .btn { display: inline-block; width: 100%; text-align: center; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
     .btn-secondary { background: #e2e8f0; color: var(--text); }
 
-    .option-btn { width: 100%; text-align: left; background: white; border: 2px solid var(--border); padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 10px; cursor: pointer; }
+    .option-btn { width: 100%; text-align: left; background: white; border: 2px solid var(--border); padding: 12px 14px; border-radius: 12px; font-size: 14px; font-weight: 600; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
     .option-btn.selected { border-color: var(--primary); background: #eef2ff; color: var(--primary); }
     .option-btn.correct { border-color: var(--success); background: var(--success-bg); color: #065f46; }
     .option-btn.incorrect { border-color: var(--error); background: var(--error-bg); color: #991b1b; }
 
-    .explanation-box { background: var(--warning-bg); border: 1px solid #fde68a; border-radius: 12px; padding: 14px; margin: 16px 0; font-size: 13px; color: #78350f; }
+    .explanation-box { background: var(--warning-bg); border: 1px solid #fde68a; border-radius: 12px; padding: 14px; margin: 16px 0; font-size: 13px; color: #78350f; line-height: 1.5; }
 
-    .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
+    .badge { display: inline-block; padding: 2px 6px; border-radius: 6px; font-size: 9px; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
     .badge-maths { background: #dbeafe; color: #1e40af; }
     .badge-vr { background: #f3e8ff; color: #6b21a8; }
     .badge-nvr { background: #fce7f3; color: #9d174d; }
@@ -80,8 +89,8 @@
   <header>
     <div class="header-container">
       <div class="logo">
-        🎓 11+ Multi-Year Academy
-        <span class="sub-logo">24-Month Roadmap (Year 4 → Year 6 Exam)</span>
+        🎓 11+ Year 4 Academy
+        <span class="sub-logo">24-Week Daily Foundation Program</span>
       </div>
       <button class="btn-reset" onclick="resetAllData()">Reset Progress</button>
     </div>
@@ -92,17 +101,26 @@
     <!-- DASHBOARD VIEW -->
     <div id="dashboard-view">
       <div class="card hero-banner">
-        <h2>Your 11+ Progression Engine 👋</h2>
-        <p>Follow the stages below from Year 4 foundations all the way through to final Year 6 timed mocks.</p>
+        <h2>Year 4 Daily Workouts 👋</h2>
+        <p>Complete 1 workout per day (20–30 mins). Read the lesson, solve the exercises, and master the explanations!</p>
+        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:4px;">
+          <span>24-Week Course Progress</span>
+          <span id="overall-pct">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="overall-bar"></div>
+        </div>
       </div>
 
-      <div class="level-tabs">
-        <button class="tab-btn active" id="tab-lvl1" onclick="switchLevel(1)">Level 1: Year 4 Foundations</button>
-        <button class="tab-btn" id="tab-lvl2" onclick="switchLevel(2)">Level 2: Year 5 Mastery</button>
-        <button class="tab-btn" id="tab-lvl3" onclick="switchLevel(3)">Level 3: Year 6 Timed Mocks</button>
+      <!-- Navigation Tabs for 24-Week Blocks -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" id="tab-block-1" onclick="filterBlock(1)">Weeks 1–6</button>
+        <button class="tab-btn" id="tab-block-2" onclick="filterBlock(2)">Weeks 7–12</button>
+        <button class="tab-btn" id="tab-block-3" onclick="filterBlock(3)">Weeks 13–18</button>
+        <button class="tab-btn" id="tab-block-4" onclick="filterBlock(4)">Weeks 19–24</button>
       </div>
 
-      <div id="level-container"></div>
+      <div id="curriculum-container"></div>
     </div>
 
     <!-- QUIZ VIEW -->
@@ -111,19 +129,19 @@
 
       <div class="card">
         <span class="badge" id="quiz-badge">Maths</span>
-        <h2 id="quiz-title" style="font-size:18px; margin-bottom:4px;">Module Title</h2>
+        <h2 id="quiz-title" style="font-size:18px; margin-bottom:4px;">Day Title</h2>
 
         <div class="lesson-box">
-          <h4 id="lesson-heading">💡 Lesson Concept</h4>
+          <h4 id="lesson-heading">💡 Daily Lesson Concept</h4>
           <div id="lesson-content"></div>
         </div>
 
         <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:12px; display:flex; justify-content:space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
-          <span>Question <span id="q-num">1</span> of <span id="q-total">5</span></span>
+          <span>Question <span id="q-num">1</span> of <span id="q-total">10</span></span>
           <span id="score-counter">Score: 0</span>
         </div>
 
-        <h3 id="q-text" style="font-size:16px; font-weight:700; margin-bottom:16px; line-height:1.4;">Question text...</h3>
+        <h3 id="q-text" style="font-size:15px; font-weight:700; margin-bottom:14px; line-height:1.4;">Question text...</h3>
 
         <div id="options-container"></div>
 
@@ -132,7 +150,7 @@
           <span id="exp-text"></span>
         </div>
 
-        <button id="btn-action" class="btn" onclick="handleAction()">Check Answer</button>
+        <button id="btn-action" class="btn" onclick="checkAnswer()">Check Answer</button>
       </div>
     </div>
 
@@ -140,12 +158,12 @@
     <div id="summary-view" class="hidden">
       <div class="card" style="text-align:center; padding:36px 20px;">
         <div style="font-size:48px; margin-bottom:12px;">🏆</div>
-        <h2 style="font-size:22px; font-weight:800;">Module Complete!</h2>
-        <div class="score-display" id="summary-score">4 / 5</div>
+        <h2 style="font-size:22px; font-weight:800;">Workout Complete!</h2>
+        <div class="score-display" id="summary-score">0 / 0</div>
         <p id="summary-msg" style="font-size:14px; font-weight:700; color:var(--success); margin-bottom:24px;">Great work!</p>
 
         <div style="display:flex; gap:12px; max-width:400px; margin:0 auto;">
-          <button class="btn btn-secondary" onclick="retryModule()">Retry Module</button>
+          <button class="btn btn-secondary" onclick="retryDay()">Retry Today</button>
           <button class="btn" onclick="showDashboard()">Return to Dashboard</button>
         </div>
       </div>
@@ -153,68 +171,46 @@
 
   </div>
 
+  <!-- SCRIPT IMPORTS FOR 4 DATA BUNDLES -->
+  <script src="weeks1-6.js"></script>
+  <script src="weeks7-12.js"></script>
+  <script src="weeks13-18.js"></script>
+  <script src="weeks19-24.js"></script>
+
+  <!-- APP ENGINE SCRIPT -->
   <script>
-    const CURRICULUM = {
-      1: {
-        title: "Level 1: Year 4 Foundations (Core Skills & Accuracy)",
-        modules: [
-          { id: "L1_M1", subject: "Maths", badgeClass: "badge-maths", title: "Times Tables & Mental Speed", lesson: "Master rapid recall of 2x through 12x tables. Focus on accuracy over speed first.", questions: [
-            { q: "What is 7 × 8?", opts: ["54", "56", "64", "48"], ans: 1, exp: "7 × 8 = 56." },
-            { q: "What is 108 ÷ 9?", opts: ["11", "12", "9", "13"], ans: 1, exp: "108 ÷ 9 = 12." },
-            { q: "Sam has 6 packs of 8 pencils. How many in total?", opts: ["42", "48", "54", "36"], ans: 1, exp: "6 × 8 = 48." }
-          ]},
-          { id: "L1_M2", subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "Synonyms & Antonyms", lesson: "Synonyms mean the same; Antonyms mean the opposite. Always test words in a sentence.", questions: [
-            { q: "Synonym for GIGANTIC:", opts: ["Tiny", "Enormous", "Heavy", "Bright"], ans: 1, exp: "GIGANTIC means ENORMOUS." },
-            { q: "Antonym for RECKLESS:", opts: ["Dangerous", "Careful", "Bold", "Speedy"], ans: 1, exp: "Opposite of RECKLESS is CAREFUL." }
-          ]}
-        ]
-      },
-      2: {
-        title: "Level 2: Year 5 Mastery (Formal 11+ Question Types)",
-        modules: [
-          { id: "L2_M1", subject: "Maths", badgeClass: "badge-maths", title: "Multi-Step Fractions & Percentages", lesson: "Convert fractions to percentages by finding equivalent fractions over 100.", questions: [
-            { q: "Leo spends 2/5 of his £35 savings. How much does he have left?", opts: ["£14", "£21", "£20", "£15"], ans: 1, exp: "1/5 of 35 = 7. 2/5 = 14 spent. Left = 35 - 14 = £21." },
-            { q: "What is 15% of £80?", opts: ["£10", "£12", "£14", "£8"], ans: 1, exp: "10% of 80 = 8. 5% = 4. 8 + 4 = £12." }
-          ]},
-          { id: "L2_M2", subject: "Verbal Reasoning", badgeClass: "badge-vr", title: "Complex Alphabet Shift Codes", lesson: "Track forward and backward shifts (+2, -1, +3) across letter patterns.", questions: [
-            { q: "If CLOCK becomes ENEEI (+2, -2, +2, -2...), what is WATCH?", opts: ["YCRBJ", "YARBJ", "XCRBI", "ZCRBJ"], ans: 0, exp: "W(+2)=Y, A(-2)=Y... follow alternating rule." }
-          ]}
-        ]
-      },
-      3: {
-        title: "Level 3: Year 5 Summer / Early Year 6 (Timed Practice Mocks)",
-        modules: [
-          { id: "L3_M1", subject: "Mixed", badgeClass: "badge-eng", title: "Timed Practice Sprint 1", lesson: "Exam conditions: Target speed is 45 seconds per question. Don't linger on stuck items.", questions: [
-            { q: "A train leaves at 14:35 and arrives at 16:15. Journey duration?", opts: ["1h 40m", "1h 50m", "2h 20m", "1h 30m"], ans: 0, exp: "14:35 to 15:35 = 1 hour. 15:35 to 16:15 = 40 mins. Total = 1h 40m." },
-            { q: "Identify the incorrectly spelled word:", opts: ["Necessary", "Separate", "Definately", "Accommodate"], ans: 2, exp: "Correct spelling is Definitely." }
-          ]}
-        ]
-      }
+    // Safe array merge (handles uncreated/empty files gracefully)
+    const getWorkouts = () => {
+      const b1 = typeof weeks1_6 !== 'undefined' ? weeks1_6 : [];
+      const b2 = typeof weeks7_12 !== 'undefined' ? weeks7_12 : [];
+      const b3 = typeof weeks13_18 !== 'undefined' ? weeks13_18 : [];
+      const b4 = typeof weeks19_24 !== 'undefined' ? weeks19_24 : [];
+      return [...b1, ...b2, ...b3, ...b4];
     };
 
-    let userProgress = JSON.parse(localStorage.getItem('11plus_pathway_progress')) || {};
-    let currentLevel = 1;
-    let activeModule = null;
+    let userProgress = JSON.parse(localStorage.getItem('11plus_y4_progress')) || {};
+    let currentBlock = 1;
+    let activeDay = null;
     let currentQIdx = 0;
     let selectedOption = null;
     let currentScore = 0;
 
     function saveProgress() {
-      localStorage.setItem('11plus_pathway_progress', JSON.stringify(userProgress));
+      localStorage.setItem('11plus_y4_progress', JSON.stringify(userProgress));
       renderDashboard();
     }
 
     function resetAllData() {
-      if (confirm("Reset all 11+ progression data?")) {
+      if (confirm("Reset all saved progress across all 24 weeks?")) {
         userProgress = {};
         saveProgress();
       }
     }
 
-    function switchLevel(lvl) {
-      currentLevel = lvl;
+    function filterBlock(blockNum) {
+      currentBlock = blockNum;
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(`tab-lvl${lvl}`).classList.add('active');
+      document.getElementById(`tab-block-${blockNum}`).classList.add('active');
       renderDashboard();
     }
 
@@ -226,48 +222,82 @@
     }
 
     function renderDashboard() {
-      const container = document.getElementById('level-container');
-      const lvlData = CURRICULUM[currentLevel];
-      
-      container.innerHTML = `
-        <h3 style="font-size:16px; font-weight:800; margin-bottom:12px;">${lvlData.title}</h3>
-        <div class="days-grid" id="modules-grid"></div>
-      `;
+      const allWorkouts = getWorkouts();
+      const container = document.getElementById('curriculum-container');
+      container.innerHTML = '';
 
-      const grid = document.getElementById('modules-grid');
+      if (allWorkouts.length === 0) {
+        container.innerHTML = `<div class="card" style="text-align:center; color:var(--text-muted);">Please upload the JS bundle files (e.g. weeks1-6.js) to view workouts!</div>`;
+        return;
+      }
 
-      lvlData.modules.forEach(m => {
-        const prog = userProgress[m.id];
-        const card = document.createElement('div');
-        card.className = `day-card ${prog && prog.completed ? 'completed' : ''}`;
-        card.onclick = () => startModule(m);
+      // Filter weeks by active block (Block 1 = W1-6, Block 2 = W7-12, etc.)
+      const startWeek = (currentBlock - 1) * 6 + 1;
+      const endWeek = currentBlock * 6;
+      const blockWorkouts = allWorkouts.filter(w => w.week >= startWeek && w.week <= endWeek);
 
-        card.innerHTML = `
-          <div>
-            <span class="badge ${m.badgeClass}">${m.subject}</span>
-            <div class="day-title">${m.title}</div>
-          </div>
-          <div>
-            ${prog && prog.completed 
-              ? `<div class="day-score">✓ Score: ${prog.score}/${m.questions.length}</div>` 
-              : `<div style="font-size:11px; color:var(--primary); font-weight:700;">Start Module →</div>`
-            }
-          </div>
-        `;
-        grid.appendChild(card);
+      let totalCompletedDays = 0;
+      let totalCourseDays = 0;
+
+      allWorkouts.forEach(w => {
+        w.days.forEach(d => {
+          totalCourseDays++;
+          if (userProgress[d.day] && userProgress[d.day].completed) totalCompletedDays++;
+        });
       });
+
+      blockWorkouts.forEach(wData => {
+        const weekEl = document.createElement('div');
+        weekEl.innerHTML = `
+          <div class="week-header">
+            ${wData.weekTitle}
+            <span>5 Workouts</span>
+          </div>
+          <div class="days-grid" id="grid-week-${wData.week}"></div>
+        `;
+        container.appendChild(weekEl);
+
+        const grid = document.getElementById(`grid-week-${wData.week}`);
+
+        wData.days.forEach(d => {
+          const prog = userProgress[d.day];
+
+          const card = document.createElement('div');
+          card.className = `day-card ${prog && prog.completed ? 'completed' : ''}`;
+          card.onclick = () => startDay(d);
+
+          card.innerHTML = `
+            <div>
+              <span class="badge ${d.badgeClass}">${d.subject}</span>
+              <div class="day-num">Day ${d.day}</div>
+              <div class="day-title">${d.title}</div>
+            </div>
+            <div>
+              ${prog && prog.completed 
+                ? `<div class="day-score">✓ ${prog.score}/${d.questions.length}</div>` 
+                : `<div style="font-size:10px; color:var(--primary); font-weight:700;">Start →</div>`
+              }
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      });
+
+      const pct = totalCourseDays > 0 ? Math.round((totalCompletedDays / totalCourseDays) * 100) : 0;
+      document.getElementById('overall-pct').innerText = `${pct}%`;
+      document.getElementById('overall-bar').style.width = `${pct}%`;
     }
 
-    function startModule(mObj) {
-      activeModule = mObj;
+    function startDay(dayObj) {
+      activeDay = dayObj;
       currentQIdx = 0;
       currentScore = 0;
 
-      document.getElementById('quiz-badge').className = `badge ${activeModule.badgeClass}`;
-      document.getElementById('quiz-badge').innerText = activeModule.subject;
-      document.getElementById('quiz-title').innerText = activeModule.title;
-      document.getElementById('q-total').innerText = activeModule.questions.length;
-      document.getElementById('lesson-content').innerText = activeModule.lesson;
+      document.getElementById('quiz-badge').className = `badge ${activeDay.badgeClass}`;
+      document.getElementById('quiz-badge').innerText = activeDay.subject;
+      document.getElementById('quiz-title').innerText = `Day ${activeDay.day}: ${activeDay.title}`;
+      document.getElementById('q-total').innerText = activeDay.questions.length;
+      document.getElementById('lesson-content').innerText = activeDay.lesson;
 
       document.getElementById('dashboard-view').classList.add('hidden');
       document.getElementById('quiz-view').classList.remove('hidden');
@@ -277,7 +307,7 @@
 
     function loadQuestion() {
       selectedOption = null;
-      const q = activeModule.questions[currentQIdx];
+      const q = activeDay.questions[currentQIdx];
 
       document.getElementById('q-num').innerText = currentQIdx + 1;
       document.getElementById('score-counter').innerText = `Score: ${currentScore}`;
@@ -308,11 +338,11 @@
 
     function checkAnswer() {
       if (selectedOption === null) {
-        alert("Select an answer first!");
+        alert("Please select an answer first!");
         return;
       }
 
-      const q = activeModule.questions[currentQIdx];
+      const q = activeDay.questions[currentQIdx];
       const buttons = document.querySelectorAll('.option-btn');
 
       buttons.forEach(b => b.onclick = null);
@@ -332,30 +362,38 @@
       document.getElementById('explanation-box').classList.remove('hidden');
 
       const actionBtn = document.getElementById('btn-action');
-      actionBtn.innerText = currentQIdx + 1 < activeModule.questions.length ? "Next Question →" : "Finish Module →";
+      actionBtn.innerText = currentQIdx + 1 < activeDay.questions.length ? "Next Question →" : "Finish Workout →";
       actionBtn.onclick = nextQuestion;
     }
 
     function nextQuestion() {
       currentQIdx++;
-      if (currentQIdx < activeModule.questions.length) {
+      if (currentQIdx < activeDay.questions.length) {
         loadQuestion();
       } else {
-        finishModule();
+        finishDay();
       }
     }
 
-    function finishModule() {
-      userProgress[activeModule.id] = { completed: true, score: currentScore };
+    function finishDay() {
+      userProgress[activeDay.day] = { completed: true, score: currentScore, total: activeDay.questions.length };
       saveProgress();
 
-      document.getElementById('summary-score').innerText = `${currentScore} / ${activeModule.questions.length}`;
+      document.getElementById('summary-score').innerText = `${currentScore} / ${activeDay.questions.length}`;
+      
+      const pct = Math.round((currentScore / activeDay.questions.length) * 100);
+      let msg = "👍 Good practice! Keep going every day.";
+      if (pct >= 85) msg = "🌟 Outstanding score! Gold star performance!";
+      else if (pct >= 65) msg = "🎉 Well done! Solid understanding.";
+
+      document.getElementById('summary-msg').innerText = msg;
+
       document.getElementById('quiz-view').classList.add('hidden');
       document.getElementById('summary-view').classList.remove('hidden');
     }
 
-    function retryModule() {
-      if (activeModule) startModule(activeModule);
+    function retryDay() {
+      if (activeDay) startDay(activeDay);
     }
 
     window.onload = function() {
